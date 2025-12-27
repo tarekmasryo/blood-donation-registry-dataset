@@ -1,0 +1,44 @@
+file,column_name,type,description,allowed_values_or_range,missing_values
+blood_donation_registry_ml_ready.csv,donor_id,int,Unique donor identifier (synthetic).,unique integer,none
+blood_donation_registry_ml_ready.csv,age,int,Donor age at as_of_date (years).,18-69 (observed),none
+blood_donation_registry_ml_ready.csv,sex,category,Self-reported sex (synthetic).,"{F, M}",none
+blood_donation_registry_ml_ready.csv,country_code,category,ISO 3166-1 alpha-2 country code.,ISO 3166-1 alpha-2; 39 unique values,none
+blood_donation_registry_ml_ready.csv,region,category,Geographic region grouping.,"{Africa, Americas, Asia, Europe, MENA}",none
+blood_donation_registry_ml_ready.csv,blood_type,category,ABO/Rh blood type.,"{A+, A-, AB+, AB-, B+, B-, O+, O-}",none
+blood_donation_registry_ml_ready.csv,is_rare_type,bool,Flag for rare blood type within the donor’s country (based on prevalence).,"{0,1}",none
+blood_donation_registry_ml_ready.csv,smoker,bool,Smoking status flag (synthetic).,"{0,1}",none
+blood_donation_registry_ml_ready.csv,bmi,float,Body Mass Index.,16-42 (observed),none
+blood_donation_registry_ml_ready.csv,chronic_condition_flag,bool,"Indicator for chronic condition (synthetic). 1 if deferral_reason == chronic_condition, else 0.","{0,1}",none
+blood_donation_registry_ml_ready.csv,eligible_to_donate,bool,Eligibility flag at as_of_date; redundant with eligibility_status.,"{0,1}",none
+blood_donation_registry_ml_ready.csv,deferral_reason,category,Reason for deferral when not eligible; NaN when eligibility_status==eligible.,"{age_out_of_range, bmi_out_of_range, chronic_condition}",NaN when eligible
+blood_donation_registry_ml_ready.csv,preferred_site,category,Preferred donation site type.,"{community_camp, hospital, mobile_unit}",none
+blood_donation_registry_ml_ready.csv,donation_count_last_12m,int,Number of donations in the last 12 months before as_of_date.,0-5 (observed),none
+blood_donation_registry_ml_ready.csv,is_regular_donor,bool,Flag indicating a regular donation pattern (synthetic).,"{0,1}",none
+blood_donation_registry_ml_ready.csv,years_since_first_donation,int,Years since first recorded donation year.,0-35 (observed),none
+blood_donation_registry_ml_ready.csv,lifetime_donation_count,int,Total lifetime donations (synthetic).,1-140 (observed),none
+blood_donation_registry_ml_ready.csv,first_donation_year,int,Year of first recorded donation.,1989-2024 (observed),none
+blood_donation_registry_ml_ready.csv,last_donation_date,date,Date of the most recent donation prior to as_of_date.,YYYY-MM-DD (range: 2007-01-23-2024-12-30),none
+blood_donation_registry_ml_ready.csv,recency_days,int,Days since last donation: as_of_date - last_donation_date.,1-6552 (observed),none
+blood_donation_registry_ml_ready.csv,donor_age_at_first_donation,int,Age at first donation: age - years_since_first_donation.,18-68 (observed),none
+blood_donation_registry_ml_ready.csv,blood_type_country_prevalence,float,Prevalence of the donor’s blood type in their country (from blood_population_distribution).,0-1 (observed: 0.00222-0.50788),none
+blood_donation_registry_ml_ready.csv,donation_propensity_score,float,Synthetic propensity score feature (not a real-world model output).,0-100 (observed: 0-89.2),none
+blood_donation_registry_ml_ready.csv,eligibility_status,category,"Eligibility class at as_of_date: eligible, temporary_deferral, permanent_deferral.","{eligible, permanent_deferral, temporary_deferral}",none
+blood_donation_registry_ml_ready.csv,as_of_date,date,Reference snapshot date for the record.,YYYY-MM-DD (fixed: 2024-12-31),none
+blood_donation_registry_ml_ready.csv,donated_next_6m,bool,Binary label derived from next_6m_donation_count (>0).,"{0,1}",none
+blood_donation_registry_ml_ready.csv,next_6m_donation_count,int,Number of donation events in the next 6 months (synthetic). Capped at 3 for cadence realism.,0-3 (observed),none
+blood_compatibility_lookup.csv,donor_blood_type,category,Donor blood type for RBC transfusion compatibility lookup.,"{A+, A-, AB+, AB-, B+, B-, O+, O-}",none
+blood_compatibility_lookup.csv,recipient_blood_type,category,Recipient blood type for RBC transfusion compatibility lookup.,"{A+, A-, AB+, AB-, B+, B-, O+, O-}",none
+blood_compatibility_lookup.csv,compatible_for_rbc_transfusion,bool,Compatibility flag for RBC transfusion (donor → recipient).,"{0,1}",none
+blood_compatibility_lookup.csv,compatibility_level,category,Compatibility level label.,"{acceptable, ideal, incompatible}",none
+blood_population_distribution.csv,country_code,category,ISO 3166-1 alpha-2 country code.,ISO 3166-1 alpha-2; 39 unique values,none
+blood_population_distribution.csv,region,category,Region grouping used in the main table.,"{Africa, Americas, Asia, Europe, MENA}",none
+blood_population_distribution.csv,population_size,int,Synthetic country population size used for weighting/realism.,10585377-198119899 (observed),none
+blood_population_distribution.csv,p_o_pos,float,Prevalence of blood type O POS in the country.,0-1 (observed: 0.3301-0.50788),none
+blood_population_distribution.csv,p_o_neg,float,Prevalence of blood type O NEG in the country.,0-1 (observed: 0.00222-0.071148),none
+blood_population_distribution.csv,p_a_pos,float,Prevalence of blood type A POS in the country.,0-1 (observed: 0.17741-0.33667),none
+blood_population_distribution.csv,p_a_neg,float,Prevalence of blood type A NEG in the country.,0-1 (observed: 0.004708-0.09813),none
+blood_population_distribution.csv,p_b_pos,float,Prevalence of blood type B POS in the country.,0-1 (observed: 0.070285-0.27041),none
+blood_population_distribution.csv,p_b_neg,float,Prevalence of blood type B NEG in the country.,0-1 (observed: 0.004489-0.038168),none
+blood_population_distribution.csv,p_ab_pos,float,Prevalence of blood type AB POS in the country.,0-1 (observed: 0.033287-0.089149),none
+blood_population_distribution.csv,p_ab_neg,float,Prevalence of blood type AB NEG in the country.,0-1 (observed: 0.003128-0.029309),none
+blood_population_distribution.csv,rh_negative_rate,float,Country-level Rh- rate (sum of negative blood types).,0-1 (observed: 0.024606-0.20328),none
