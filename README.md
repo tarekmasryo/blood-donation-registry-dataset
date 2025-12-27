@@ -17,8 +17,6 @@ This repository provides a donor snapshot with eligibility/deferrals, donation h
 - `data/blood_compatibility_lookup.csv` — RBC compatibility matrix (64 × 4)
 - `data/data_dictionary.csv` — column definitions, types, ranges, missing rules
 
-### Snapshot reference date
-- `as_of_date = 2024-12-31`
 
 ---
 
